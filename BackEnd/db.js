@@ -1,5 +1,5 @@
 // Below we are writing code to connect to mongo database, connecting to basic(means khudka ka computer is working as express server) mongodb server
-const mongoose = require('mongoose');
+const mongoose = require('mongoose');   // mongoose imported
 const mongoURI = "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false"        // connection string hoti hai jo "" ke andar likhi hai...it helps to connect to mongodb server...filhal ye string local computer ki hai....agar kisi remote mongo server se connect karna hai to uski string lagegi
 
 
