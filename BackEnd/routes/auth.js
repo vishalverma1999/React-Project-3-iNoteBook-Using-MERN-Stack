@@ -1,7 +1,9 @@
 const express = require('express');   // express imported
 const User =  require('../models/User');  //User module imported
-const router = express.Router(); // using Router, simce express ke andar ek router hota hai
-const user = User
+const router = express.Router(); // using Router, since express ke andar ek router hota hai
+const { body, validationResult } = require('express-validator');  // validator imported
+
+
 // router.get('/', (req, res)=>{   // since we are using router to hum app.get nahi router.get karenge, also '/' /api/auth jo ki app.use() mein index.js file mein likhi hai ke last mein lagega aur aisa dikhega fir /api/auth/....uske baad callback function run hoga with two parameters request and response
     // obj = {
     //     a: "thios",
@@ -27,11 +29,23 @@ const user = User
 
 
 // Creating New User
-router.post('/', (req,res)=>{
-    console.log(req.body);
-    const user = User(req.body);   // Creating New User
-    user.save();     // new User created in mongodb database, email set to unique in User schema, therefore body with duplicate email will not add in db and throw error
-    res.send(req.body);
+router.post('/',[
+    body('name', 'Enter a valid name').isLength({ min: 3 }),   // 'Enter a valid name'--> default msg to show in errors array if validation is not true
+    body('email', 'Enter a valid email').isEmail(),   // ek valid email hona chaiye
+    body('password', 'password must be at least 5 chars long').isLength({ min: 5 }),
+], (req,res)=>{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {   // agar errors empty nahi hai i.e false to !false i.e true karke if condition chalado
+      return res.status(400).json({ errors: errors.array() });  // array of errors will be returned with msg,value,param and location
+    }
+
+    User.create({          // creating user in mongodb last video mein shayad user.save() se kiya tha
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+      }).then(user => res.json(user))
+      .catch((error)=>{console.log(error)
+      res.json({error: 'please enter unique email', message: error.message})})   // error.message--> displays the message
 })
 
 

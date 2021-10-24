@@ -27,3 +27,5 @@ const UserSchema = new Schema({
 
 // To Use this schema
 module.exports = mongoose.model('user', UserSchema);          //mongoose.model means schema se ek koi model banana hai, here we choose model name = user aur schema to hai hi UserSchema...model banne ke baad ab hum export karenge using module.exports... HUM in Schemas ko apne routes mein use karenge
+
+// module.exports = mongoose.model('user', UserSchema).createIndexes();    // agar kabhi unique set karne par bhi kisi ke duplicate ko accept kar raha hai mongo to uske schema jab model ko export karenge to .createIndexes() chipka do and it will resolve the problem 
