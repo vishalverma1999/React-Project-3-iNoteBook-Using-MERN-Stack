@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');   // mongoose imported
+const { Schema } = mongoose;
 
 const UserSchema = new Schema({
    
@@ -15,7 +16,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    dtae: {
+    date: {
         type: Date,
         default: Date.now         // Date.now() --> Don't do this, hume function dena hai call nahi karna, run to jab hoga jab actually mein koi document insert hone waala hoga mongo mein
     },

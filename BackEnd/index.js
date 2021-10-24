@@ -8,6 +8,8 @@ connectToMongo();  // Now run connectToMongo, since we have successfully taken c
 const app = express()
 const port = 3000
 
+app.use(express.json());   // req.body ko use karne ke liye ek middleware banana padta hai like this, middleware helps to send requests in json to server...POST request mein jaise hum kuch content bhejte hai aur fir server se response aata hai
+
 // app.get('/', (req, res) => {    //.get ek endpoint hai jo Hello vishal! return kar raha hai
 //   res.send('Hello vishal!')
 // })
