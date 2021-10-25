@@ -4,6 +4,7 @@ const router = express.Router(); // using Router, since express ke andar ek rout
 const { body, validationResult } = require('express-validator');  // validator imported
 const bcrypt = require('bcryptjs');   // imported from bcryptjs package
 const jwt = require('jsonwebtoken');   // imported from jswebtoken package
+const JWT_SECRET = "Harryisagoodb$oy";  // kept secretly in other file like .env.local
 
 // router.get('/', (req, res)=>{   // since we are using router to hum app.get nahi router.get karenge, also '/' /api/auth jo ki app.use() mein index.js file mein likhi hai ke last mein lagega aur aisa dikhega fir /api/auth/....uske baad callback function run hoga with two parameters request and response
 // obj = {
@@ -85,7 +86,6 @@ router.post('/createuser', [
         // jab koi login karega to hume use usi ka entered data thodina denge hum use token denge
         // tokens mainly are seesion token and json web token
         // Here We will use json web token--> In short jwt is a way to verify user, client aur server ke beech facilitates secured communication, jwt has 3 parts--> token type, data, secret
-        const JWT_SECRET = "Harryisagoodb$oy";
         const data = {
             user: {
                 id: user.id   // ye mongodb ke andar jo entries hai users ki unke corresponding id hai
@@ -98,12 +98,52 @@ router.post('/createuser', [
     }
     catch (error) {
         console.error(error.message);
-        res.status(500).send("some error occured");
+        res.status(500).send("Internal Server Error");
     }
-
-
-
 })
 
+
+
+// Authenticate a User using: POST '/api/auth/login'   by async await method, No login required
+router.post('/login', [
+    body('email', 'Enter a valid email').isEmail(),   
+    body('password', 'password cannot be blank').isLength({ min: 5 })
+], async (req, res) => {
+
+    // if there are errors, return the bad request and the errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {   // agar errors empty nahi hai i.e false to !false i.e true karke if condition chalado
+        return res.status(400).json({ errors: errors.array() });  // array of errors will be returned with msg,value,param and location
+    }
+
+    // in ideal case when user sends the valid email and valid password
+    const { email, password } = req.body;     // destructuring
+    try {
+        let user = await User.findOne({email});   // User model mein find karo ki jo input kiya hai email wo hai, hai to user mein aayegi nahi hai to user mein null aayega, findOne() is a asynchronous method
+        if(!user){    // agar model ya database mein email nahi mila to return kard error
+            return res.status(400).json({ errors: "Please try to login with correct credentials" });
+        }
+
+        // Ab agar email mil jaata hai to password ko compare karo database mein stored hash se
+        const passwordCompare = await bcrypt.compare(password, user.password);  // compare() is a asynchronous method, returns boolean
+        if(!passwordCompare){
+            return res.status(400).json({ errors: "Please try to login with correct credentials" });
+        }
+
+
+        // Ab agar password email san sahi hai to user ka data bhejna hai
+        const data = {
+            user: {
+                id: user.id   // ye mongodb ke andar jo entries hai users ki unke corresponding id hai
+            }
+        }
+        const authToken = jwt.sign(data, JWT_SECRET);   // sign() is synchronus method
+        res.json({ authToken }); 
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
 
 module.exports = router;  // This is written taaki is router ko inde.js mein app.use() ki madad se use kar paayein
