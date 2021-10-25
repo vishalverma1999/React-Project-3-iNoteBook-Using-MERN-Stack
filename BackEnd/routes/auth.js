@@ -4,7 +4,8 @@ const router = express.Router(); // using Router, since express ke andar ek rout
 const { body, validationResult } = require('express-validator');  // validator imported
 const bcrypt = require('bcryptjs');   // imported from bcryptjs package
 const jwt = require('jsonwebtoken');   // imported from jswebtoken package
-const JWT_SECRET = "Harryisagoodb$oy"; // kept secretly in other file like .env.local
+const JWT_SECRET = "Harryisagoodb$oy"; // generally kept secretly in other file like .env.local
+const fetchuser = require('../middleware/fetchuser');    // importing fetchuser
 
 // router.get('/', (req, res)=>{   // since we are using router to hum app.get nahi router.get karenge, also '/' /api/auth jo ki app.use() mein index.js file mein likhi hai ke last mein lagega aur aisa dikhega fir /api/auth/....uske baad callback function run hoga with two parameters request and response
 // obj = {
@@ -53,7 +54,7 @@ const JWT_SECRET = "Harryisagoodb$oy"; // kept secretly in other file like .env.
 
 
 
-// Creating New User using POST '/api/auth/createuser'   by async await method, No login required
+// ROUTE-1 Creating New User using POST '/api/auth/createuser'   by async await method, No login required
 router.post('/createuser', [
     body('name', 'Enter a valid name').isLength({ min: 3 }),   // 'Enter a valid name'--> default msg to show in errors array if validation is not true
     body('email', 'Enter a valid email').isEmail(),   // ek valid email hona chaiye
@@ -104,7 +105,7 @@ router.post('/createuser', [
 
 
 
-// Authenticate a User using: POST '/api/auth/login'   by async await method, No login required
+// ROUTE-2: Authenticate a User using: POST '/api/auth/login'   by async await method, No login required
 router.post('/login', [
     body('email', 'Enter a valid email').isEmail(),   
     body('password', 'password cannot be blank').isLength({ min: 5 })
@@ -145,5 +146,22 @@ router.post('/login', [
         res.status(500).send("Internal Server Error");
     }
 })
+
+
+// ROUTE 3: Get loggedin User detaild using: POST "/api/auth/getuser". Login required
+// fetchuser is a middleware, middleware--> ek function hota hai jo call kiya jaayega jab bhi aapke jo login required waale routes hai un par request aayegi, middleware isliye use kiya kyunki agar user ki id lene ka code yahi likhte to wo bas yahi tak valid hota aur maanlo kisi aur endpoint ko bhi authentication ki jarurat hoti user id ki to waha alag se likhna padta, isliye to save from this hum ek middleware daaldenge jaha bhi authentication vhaiye
+router.post('/getuser', fetchuser,  async (req, res) => {
+
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId).select("-password");  // Dekho aisa hai ki jab humne authtoken banaya tha tab humne jo data paas kiya tha jwt.sign() mein, us data mein humne mongodb mein jo data entries thi unko unki id se grab kiya tha aur data mein daalkar auth token bana diya tha,,,,which means agar hum us authtoken mein se us particular user id ko nikaal le ya decode karle to hum fir jo login ho chuka hai us user ki details ko nikal paayenge,,,,aur fir us data mein se sab kuch select kar lena except password 
+        res.send(user);
+        
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
 
 module.exports = router;  // This is written taaki is router ko inde.js mein app.use() ki madad se use kar paayein

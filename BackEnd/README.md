@@ -13,3 +13,7 @@ CRUD-->CRUD is an acronym that comes from the world of computer programming and 
 #47th Video--->
 collection in thunderclient means jaha par aap apne saare endpoints rakhte ho is collection
 authentication se related saara kaam authentication folder mein hoga inside thunderclient iNotebook collection
+
+#51 Video---->
+fetchuser waali file mein neeche waali line samajh hi nahi aayi 
+req.user = data.user;      // kya matlab hai req.user ka???
