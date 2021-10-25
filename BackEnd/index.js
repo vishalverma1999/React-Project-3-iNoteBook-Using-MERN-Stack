@@ -6,7 +6,7 @@ connectToMongo();  // Now run connectToMongo, since we have successfully taken c
 
 
 const app = express()
-const port = 3000
+const port = 5000;     // 3000 port par react app chalega
 
 app.use(express.json());   // req.body ko use karne ke liye ek middleware banana padta hai like this, middleware helps to send requests in json to server...POST request mein jaise hum kuch content bhejte hai aur fir server se response aata hai
 

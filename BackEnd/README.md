@@ -9,3 +9,7 @@ drawback hai ke fir management nahi ho pata application ka isliye mooongose aaya
 Notes.js and User.js are schemas, we put them inside models folder kyunki un schemas se hi humne models banaye hai
 
 CRUD-->CRUD is an acronym that comes from the world of computer programming and refers to the four functions that are considered necessary to implement a persistent storage application: create, read, update and delete.
+
+#47th Video--->
+collection in thunderclient means jaha par aap apne saare endpoints rakhte ho is collection
+authentication se related saara kaam authentication folder mein hoga inside thunderclient iNotebook collection
