@@ -2,7 +2,8 @@ const express = require('express');   // express imported
 const User = require('../models/User');  //User module imported
 const router = express.Router(); // using Router, since express ke andar ek router hota hai
 const { body, validationResult } = require('express-validator');  // validator imported
-
+const bcrypt = require('bcryptjs');   // imported from bcryptjs package
+const jwt = require('jsonwebtoken');   // imported from jswebtoken package
 
 // router.get('/', (req, res)=>{   // since we are using router to hum app.get nahi router.get karenge, also '/' /api/auth jo ki app.use() mein index.js file mein likhi hai ke last mein lagega aur aisa dikhega fir /api/auth/....uske baad callback function run hoga with two parameters request and response
 // obj = {
@@ -71,12 +72,29 @@ router.post('/createuser', [
         if (user) {    // if user with the email exists, to bas game over return kardo error ki aisa email db mein hai already
             return res.status(400).json({ error: "Sorry a user with this email already exists" });
         }
+
+        // HASHING THE PASSWORD USING Salt and bcrypt
+        const salt = await bcrypt.genSalt(10);   // genSaltSync works synchronously but we used the asynchronous one i.e genSalt(), hence await use karna padega kyunki promise return karega
+        const securedPassword = await bcrypt.hash(req.body.password, salt);   // hashSync works synchronously but we used the asynchronous one i.e hashSync(), hence await use karna padega kyunki promise return karega
         user = await User.create({          // creating user in mongodb last to last video mein shayad user.save() se kiya tha
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password
+            password: securedPassword
         })
-        res.json({ user });
+
+        // jab koi login karega to hume use usi ka entered data thodina denge hum use token denge
+        // tokens mainly are seesion token and json web token
+        // Here We will use json web token--> In short jwt is a way to verify user, client aur server ke beech facilitates secured communication, jwt has 3 parts--> token type, data, secret
+        const JWT_SECRET = "Harryisagoodb$oy";
+        const data = {
+            user: {
+                id: user.id   // ye mongodb ke andar jo entries hai users ki unke corresponding id hai
+            }
+        }
+        const authToken = jwt.sign(data, JWT_SECRET);   // sign() is synchronus method
+        console.log(authToken);
+        // res.json(authToken);    //intead of sending user in response we will send jsw token
+        res.json({ authToken });  // es6, now we don't need to write like authToken: authToken, automatically ho jayega
     }
     catch (error) {
         console.error(error.message);
@@ -89,10 +107,3 @@ router.post('/createuser', [
 
 
 module.exports = router;  // This is written taaki is router ko inde.js mein app.use() ki madad se use kar paayein
-
-
-
-
-
-
-// Creating New User using POST '/api/auth/createuser'   No login required
