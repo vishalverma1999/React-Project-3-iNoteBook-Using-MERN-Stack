@@ -1,5 +1,5 @@
 const express = require('express');   // express imported
-const User = require('../models/User');  //User module imported
+const User = require('../models/User');  //User modle imported
 const router = express.Router(); // using Router, since express ke andar ek router hota hai
 const { body, validationResult } = require('express-validator');  // validator imported
 const bcrypt = require('bcryptjs');   // imported from bcryptjs package
