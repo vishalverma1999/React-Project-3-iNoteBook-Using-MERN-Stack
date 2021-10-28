@@ -49,4 +49,35 @@ router.post('/addnotes', fetchuser, [
 
 
 
+// ROUTE-3 Update an existing note Using: PUT '/api/notes/updatenote/:id' login required, you can also use post request instead put request
+// Alag-alag requests use karne ka ek nebefit hota ha ki hum same endpoint se alag-alag request karke alag-alag kaam kara sakte hain
+router.post('/updatenote/:id', fetchuser, async (req, res) => {   // /updatenote/:id --> update the note to the given id
+
+    const { title, description, tag } = req.body;
+
+    // Create a newNote object
+    const newNote = {};
+    
+    // setting newNote keys
+    if(title){newNote.title = title};   // newNote object mein title key banado aur uski value set kardo title jise hum req.body se nikal rahe hai
+    if(description){newNote.description = description};   // newNote object mein description key banado aur uski value set kardo description jise hum req.body se nikal rahe hai
+    if(tag){newNote.tag = tag};   // newNote object mein tag key banado aur uski value set kardo tag jise hum req.body se nikal rahe hai
+
+    // Find the note to be updated and update it
+    let notes = await Notes.findById(req.params.id);  // ye us note ki id hai jise aap update karna chahte ho
+
+    // agar is id ka note hi exist na karta ho tab do the below wriiten
+    if(!notes){
+        res.status(404).send("Not found")   // The HTTP 404 Not Found client error response code indicates that the server can't find the requested resource
+    };                                 
+
+    // yaha maanke ke chal rahe hai note to milgaya hai Notes model mein, Ab compare karenge ki kya jo user field mein jo foreign key hai kya wo jo user note update karna chah raha hai uski ki hai,,, user id hume fetchuser middleware mein se mmil jayegi
+    if(notes.user.toString() !== req.user.id){
+        return res.status(401).send("Not Allowed");
+    }
+
+    notes = await Notes.findByIdAndUpdate(req.params.id, {$set: newNote}, {new:true});   // new:true --> agar kuch naya content aata hai to create karne do
+    res.json({notes});
+});
+
 module.exports = router;  // This is written taaki is router ko inde.js mein app.use() ki madad se use kar paayein
