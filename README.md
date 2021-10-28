@@ -8,3 +8,5 @@ Package Install karne ke baad ya to:
 1) Backend ke package.json ki scripts mein likhdo ki npm start karne par nodemon .\index.js bhi start ho jaaye      YA FIR
 
 2) Frontend ke package.json ki scripts mein likhdo ki npm start karne par npm start ho jaye aur saath mein nodemon .\index.js server bhi
+
+#57 Video ----> Bhai bohot sahi explain kiya hai Context API ko theoretically, aur mene iske baare mein kuch likha nahi,,, to DIRECT VIDEO DEKHLENA
