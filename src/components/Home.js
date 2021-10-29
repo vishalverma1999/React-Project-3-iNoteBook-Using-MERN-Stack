@@ -1,10 +1,7 @@
-import React, { useContext } from 'react'
-import noteContext from '../context/notes/noteContext'
+import React from 'react'
+import Notes from './Notes'
 
 export const Home = () => {
-
-    const context = useContext(noteContext);   /// context API ka use
-    const {notes,setnotes} = context;   // destructuring the context and pulling out notes and setnotes
 
     return (
         <div>
@@ -28,12 +25,7 @@ export const Home = () => {
             </form>
             </div>
 
-            <div className="container my-3">
-                <h2>Your Notes</h2>
-                {notes.map((element)=>{   // looping through the notes state containing notesInitial Array
-                    return element.title;
-                })}
-            </div>
+           <Notes/>
         </div>
     )
 }
