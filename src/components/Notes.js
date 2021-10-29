@@ -11,7 +11,7 @@ import NoteItem from './NoteItem';
         <div className="row my-3">
         <h2>Your Notes</h2>
         {notes.map((noteElement)=>{   // looping through the notes state containing notesInitial Array
-            return  <NoteItem notes={noteElement} /> 
+            return  <NoteItem key={noteElement._id}notes={noteElement} /> 
         })}
     </div>
      )
