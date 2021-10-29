@@ -42,7 +42,7 @@ const NoteState = (props)=>{
         },
         {
           "_id": "6177c9f07734a3d5cfc69733",
-          "user": "6176e0e35dedad627e4cb425",
+          "user": "6176e0e35dedad627e4cb4251966",
           "title": "Get to Work",
           "description": "Channelize your energy",
           "tag": "Personal nut IMPORTANT",
@@ -53,8 +53,35 @@ const NoteState = (props)=>{
 
       const [notes, setnotes] = useState(notesInitial);  // notes state
 
+    // Add a Note
+    const addNote = (title, description, tag)=>{
+
+        console.log("Adding a New Note")
+        const note =  {
+            "_id": "6177c9f07734a3d5cfc69733",
+            "user": "6176e0e35dedad627e4cb425854",
+            "title": title,
+            "description": description,
+            "tag": tag,
+            "dtae": "2021-10-26T09:27:12.361Z",
+            "__v": 0
+          }
+        setnotes(notes.concat(note));   // We used concat instead push because concat returns an array whereas push Updates an array
+    }
+
+    // Delete A note
+    const deleteNote = ()=>{
+
+    }
+
+    // Edit A note
+    const editNote = ()=>{
+        
+    }
+
     return (
-        <noteContext.Provider  value = {{notes:notes,setnotes:setnotes}}>   
+        // {/* value = {{notes:notes,setnotes:setnotes}} ,object banakar jaisa value mein kar rakha hai, agar aap direct bhi naam likhdoge without making object to bhi kaam ho jayega according to modern javascript like, value = {{notes, setnotes}}*/}
+        <noteContext.Provider  value = {{notes, addNote, deleteNote, editNote}}>    {/*Exporting values*/}
            {props.children}      
         </noteContext.Provider>
     )

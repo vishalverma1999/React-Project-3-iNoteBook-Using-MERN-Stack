@@ -10,3 +10,10 @@ Package Install karne ke baad ya to:
 2) Frontend ke package.json ki scripts mein likhdo ki npm start karne par npm start ho jaye aur saath mein nodemon .\index.js server bhi
 
 #57 Video ----> Bhai bohot sahi explain kiya hai Context API ko theoretically, aur mene iske baare mein kuch likha nahi,,, to DIRECT VIDEO DEKHLENA
+
+
+#63 Video AddNote Component---> The name attribute specifies the name of an <input> element.
+
+The name attribute is used to reference elements in a JavaScript, or to reference form data after a form is submitted.
+
+Note: Only form elements with a name attribute will have their values passed when submitting a form.
