@@ -9,7 +9,7 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
 
     try {
         const notes = await Notes.find({ user: req.user.id }); // User model mein jo user ki id's thi unko nikaalo, then {user: id} ho jayega, ab ek aisa field banaya hai humne Notes model mein jaha user object ke andar humne id store kari hai User model ke users ki, uske user id ke corresponding notes jo bhi Notes model mein store hai unhe find karo aur mil jaate hai to notes variable mein store kara do 
-        res.json([notes]);  
+        res.json(notes);  
     } 
     catch (error) {
         console.error(error.message);

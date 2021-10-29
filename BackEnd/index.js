@@ -32,7 +32,7 @@ app.use('/api/auth', require('./routes/auth'));  // /api/auth endpoint banana ha
 app.use('/api/notes', require('./routes/notes'));
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`iNotebook BackEnd listening at http://localhost:${port}`);
 })
 
 // pehle 'Example app listening at http://localhost:3000' chalega fir 'Connected to mongo successfully', Kyunki mongo connect hone mein thoda time lega tab tak uske neeche ka code chalne lagega...aur jaise hi connect ho jayega waise hi callback function chal jayega
