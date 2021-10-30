@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'   // useLoaction Hook reacr rputer dom mein rehta hai
 
 const Navbar = () => {
 
   let location = useLocation();    // useLocation hook(jo ki react router dom ke andar hota hai) ki madad se hum jis bhi route par honge uska pathname wagerh grab kar paayenge....aur fir use click karne par manipulate kar sakte hai jaise class active add hogi jab about par click karoge aur add hogi home par jab home ya route / par click karoge
-  useEffect(() => {
-    console.log(location);   //object like this {pathname: '/about', search: '', hash: '', state: undefined, key: 'na672t'} is seen in console
-    console.log(location.pathname);    // /about Or /
-  }, [location]);   // location par depend hai useEffect, which means jab bhi location change hogi to useEffect hook chalega
+  // useEffect is Just used to show the useLocation ka effect in console
+  // useEffect(() => {
+  //   console.log(location);   //object like this {pathname: '/about', search: '', hash: '', state: undefined, key: 'na672t'} is seen in console
+  //   console.log(location.pathname);    // /about Or /
+  // }, [location]);   // location par depend hai useEffect, which means jab bhi location change hogi to useEffect hook chalega
 
   return (
     <>
