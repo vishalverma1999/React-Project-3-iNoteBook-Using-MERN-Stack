@@ -17,7 +17,7 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
     }
 })
 
-// ROUTE-2 Add a new note: GET '/api/notes/addnotes' login required
+// ROUTE-2 Add a new note: POST '/api/notes/addnotes' login required
 router.post('/addnotes', fetchuser, [
     body('title', 'Enter a valid title').isLength({ min: 3 }),
     body('description', 'Description must be at least 5 chars long').isLength({ min: 5 }),
@@ -51,7 +51,7 @@ router.post('/addnotes', fetchuser, [
 
 // ROUTE-3 Update an existing note Using: PUT '/api/notes/updatenote/:id' login required, you can also use post request instead put request
 // Alag-alag requests use karne ka ek nebefit hota ha ki hum same endpoint se alag-alag request karke alag-alag kaam kara sakte hain
-router.post('/updatenote/:id', fetchuser, async (req, res) => {   // /updatenote/:id --> update the note to the given id
+router.put('/updatenote/:id', fetchuser, async (req, res) => {   // /updatenote/:id --> update the note to the given id
 
     const { title, description, tag } = req.body;
     

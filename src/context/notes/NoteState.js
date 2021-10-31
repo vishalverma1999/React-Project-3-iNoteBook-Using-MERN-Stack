@@ -43,16 +43,8 @@ const NoteState = (props) => {
     console.log(json);
 
     console.log("Adding a New Note")
-    const note = {
-      "_id": "6177c9f07734a3d5cfc69733",
-      "user": "6176e0e35dedad627e4cb425854",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "dtae": "2021-10-26T09:27:12.361Z",
-      "__v": 0
-    }
-    setnotes(notes.concat(note));   // We used concat instead push because concat returns an array whereas push Updates an array
+    
+    setnotes(notes.concat(json));   // We used concat instead push because concat returns an array whereas push Updates an array
   }
 
   // Delete A note
@@ -78,7 +70,7 @@ const NoteState = (props) => {
   const editNote = async (id, title, description, tag) => {
     // API call
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         'Content-Type': 'application/json',
         'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjE3NmUwZTM1ZGVkYWQ2MjdlNGNiNDI1In0sImlhdCI6MTYzNTQyMjE1MH0.gJJJl5rzNst3ZLxsQ1wT3NuHZ0vgCejWTyPQ4eZWImo'
@@ -92,16 +84,16 @@ const NoteState = (props) => {
     const json = await response.json();
     console.log(json);
 
+    let newUpdatedNotes = JSON.parse(JSON.stringify(notes));  // Kyunki react mein directly hum state ko aise change nahi kar sakte isliye newUpdatedNotes banaya hai,,,,,,  JSON.stringify(notes)--> notes array stringify ho jayega uske baad json.parse jo kiya hai usse deep copy ban jayegi,,,,, :):):) hahahaha kuch samajh nahi aaya is line mein bas ratlo
     // Logic to edit in client
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
-      if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+    for (let index = 0; index < newUpdatedNotes.length; index++) {
+      if (newUpdatedNotes[index]._id === id) {
+        newUpdatedNotes[index].title = title;
+        newUpdatedNotes[index].description = description;
+        newUpdatedNotes[index].tag = tag;
       }
-
     }
+    setnotes(newUpdatedNotes);
 
   }
 

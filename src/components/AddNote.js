@@ -3,7 +3,7 @@ import noteContext from '../context/notes/noteContext'
 
 const AddNote = () => {
 
-    const [note, setnote] = useState({ title: "", description: "", tag: "default" })
+    const [note, setnote] = useState({ title: "", description: "", tag: "" })
 
     const context = useContext(noteContext);   /// context API ka use
     const { addNote } = context;   // destructuring the context and pulling out notes and setnotes
@@ -36,9 +36,9 @@ const AddNote = () => {
                     <label htmlFor="description" className="form-label">Description</label>
                     <input type="text" className="form-control" id="description" name="description" onChange={onChange} />   {/*name attribute add kiya hai input mein */}
                 </div>
-                <div className="mb-3 form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                <div className="mb-3">
+                    <label htmlFor="tag" className="form-label">Tag</label>
+                    <input type="text" className="form-control" id="tag" name="tag" onChange={onChange} />   
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={handleSubmitClick} >Add Note</button>
             </form>
