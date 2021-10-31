@@ -1,11 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import NoteItem from './NoteItem';
 import AddNote from './AddNote'
 import noteContext from '../context/notes/noteContext'
 
 const Notes = () => {
     const context = useContext(noteContext);   /// context API ka use
-    const {notes} = context;   // destructuring the context and pulling out notes and setnotes
+    const {notes, getAllNotes} = context;   // destructuring the context and pulling out notes and setnotes
+    useEffect(() => {
+        getAllNotes();
+    }, [])
     return (
         <>
             <AddNote />

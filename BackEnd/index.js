@@ -1,14 +1,15 @@
 const connectToMongo = require('./db');     //exported connectToMongo function from db.js is grabbed in index.js
 const express = require('express');      // index.js actually mein ek express server rahega
+var cors = require('cors')
 
 connectToMongo();  // Now run connectToMongo, since we have successfully taken connectToMongo from db.js
 // Run karne ke liye we will use nodemon package that is npm i -D nodemon, -D is used to use it as devDependencies and don't want to make part of packages
-
 
 const app = express()
 const port = 5000;     // 3000 port par react app chalega
 
 app.use(express.json());   // req.body ko use karne ke liye ek middleware banana padta hai like this, middleware helps to send requests in json to server...POST request mein jaise hum kuch content bhejte hai aur fir server se response aata hai
+app.use(cors())
 
 // app.get('/', (req, res) => {    //.get ek endpoint hai jo Hello vishal! return kar raha hai
 //   res.send('Hello vishal!')

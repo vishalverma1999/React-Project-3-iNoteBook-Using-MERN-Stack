@@ -17,3 +17,6 @@ authentication se related saara kaam authentication folder mein hoga inside thun
 #51 Video---->
 fetchuser waali file mein neeche waali line samajh hi nahi aayi 
 req.user = data.user;      // kya matlab hai req.user ka???
+
+#65 Video--->
+Directly aap browser se api ko request nahi maar sakte isliye cors ka package backend mein insatll karna padega

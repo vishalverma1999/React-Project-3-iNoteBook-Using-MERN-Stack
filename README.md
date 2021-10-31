@@ -17,3 +17,6 @@ Package Install karne ke baad ya to:
 The name attribute is used to reference elements in a JavaScript, or to reference form data after a form is submitted.
 
 Note: Only form elements with a name attribute will have their values passed when submitting a form.
+
+#65 Video--->
+Directly aap browser se api ko request nahi maar sakte isliye cors ka package backend mein insatll karna padega
