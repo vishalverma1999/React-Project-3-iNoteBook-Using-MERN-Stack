@@ -7,7 +7,7 @@ const Signup = (props) => {
     let history = useHistory();   // Redirect karne ke liye hum useHistory hook ka use karenge jo ki react-router-dom ka hi part hai
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault();   
         const response = await fetch(`http://localhost:5000/api/auth/createuser`, {
             method: "POST",
             headers: {
@@ -38,7 +38,8 @@ const Signup = (props) => {
     }
 
     return (
-        <div className="container">
+        <div className="container mt-3">
+            <h2 className="mb-3">Create an Account to Use iNotebook</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>

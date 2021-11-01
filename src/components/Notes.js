@@ -2,15 +2,22 @@ import React, { useContext, useEffect, useRef, useState } from 'react'   //useRe
 import NoteItem from './NoteItem';
 import AddNote from './AddNote'
 import noteContext from '../context/notes/noteContext'
+import { useHistory } from 'react-router';
 
 const Notes = (props) => {
 
+    let history = useHistory();
     const [note, setnote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
     const context = useContext(noteContext);   /// context API ka use
 
     const { notes, getAllNotes, editNote } = context;   // destructuring the context and pulling out notes and setnotes
     useEffect(() => {
-        getAllNotes();
+        if(localStorage.getItem('token')){    // agar local storage null nahi hai matlab aapki login details ke corresponding authtoken mila hai to saare notes fetch karlo
+            getAllNotes();
+        }
+        else{     // agar login credentials daalne par authtoken nahi milta hai means credentials correct nahi hai to login waale page par hi redirect kardo
+            history.push('/login');
+        }
     }, [])
 
     const updateNote = (currentNote) => {

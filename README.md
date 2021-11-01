@@ -1,3 +1,5 @@
+#72 Video---> Abhi bhi kuch bugs present hai like about page ko develop nahi kiya hai plus password aur confirm password alag alag daalne par bhi user signup kar paa raha hai ye do major bugs hai...kuch bugs to fix kiye hai but above written bugs abhi bhi bache hai
+
 git repo initialized.....First Commit......Checking all Working Fine
 
 #42nd Video
@@ -20,3 +22,4 @@ Note: Only form elements with a name attribute will have their values passed whe
 
 #65 Video--->
 Directly aap browser se api ko request nahi maar sakte isliye cors ka package backend mein insatll karna padega
+

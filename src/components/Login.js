@@ -23,9 +23,9 @@ const Login = (props) => {
       if(json.success){
         // save the auth-token and redirect
         localStorage.setItem('token', json.authToken);   // saving the authtoken in localstorage
+        props.showAlert("Logged In Successfully", "success");
         // Redirect karne ke liye hum useHistory hook ka use karenge jo ki react-router-dom ka hi part hai
         history.push('/');
-        props.showAlert("Logged In Successfully", "success");
       }
       else{
         props.showAlert("Invalid Credentials", "danger");
@@ -37,7 +37,8 @@ const Login = (props) => {
     }
 
     return (
-        <div>
+        <div className="mt-3">
+            <h2 className="mb-3">Login to Continue to iNotebook</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>

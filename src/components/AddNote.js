@@ -8,7 +8,7 @@ const AddNote = (props) => {
     const context = useContext(noteContext);   /// context API ka use
     const { addNote } = context;   // destructuring the context and pulling out notes and setnotes
 
-    const handleSubmitClick = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
         props.showAlert("Note Added Successfully","success")
@@ -23,10 +23,10 @@ const AddNote = (props) => {
     return (
         <div className="container my-3">
             <h2>Add a Note</h2>
-            <form className="my-3">
+            <form className="my-3" onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Title</label>
-                    <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" onChange={onChange} /> {/*name attribute add kiya hai input mein 
+                    <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" onChange={onChange} minLength={3} required /> {/*name attribute add kiya hai input mein 
                 The name attribute specifies the name of an <input> element.
                 The name attribute is used to reference elements in a JavaScript, or to reference form data after a form is submitted.
                 Note: Only form elements with a name attribute will have their values passed when submitting a form.
@@ -35,13 +35,13 @@ const AddNote = (props) => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <input type="text" className="form-control" id="description" name="description" onChange={onChange} />   {/*name attribute add kiya hai input mein */}
+                    <input type="text" className="form-control" id="description" name="description" onChange={onChange} minLength={5} required />   {/*name attribute add kiya hai input mein */}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="tag" className="form-label">Tag</label>
                     <input type="text" className="form-control" id="tag" name="tag" onChange={onChange} />   
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={handleSubmitClick} >Add Note</button>
+                <button type="submit" className="btn btn-primary" >Add Note</button>
             </form>
         </div>
     )
