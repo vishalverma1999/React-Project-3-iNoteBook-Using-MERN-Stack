@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 
 const Login = () => {
 
-    const [credentials, setcredentials] = useState({email: "", password: ""});
+    const [credentials, setcredentials] = useState({ email: "", password: "" });
     let history = useHistory();   // Redirect karne ke liye hum useHistory hook ka use karenge jo ki react-router-dom ka hi part hai
 
     const handleSubmit = async (e)=>{

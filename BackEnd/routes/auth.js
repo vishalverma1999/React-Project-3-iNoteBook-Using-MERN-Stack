@@ -60,10 +60,12 @@ router.post('/createuser', [
     body('email', 'Enter a valid email').isEmail(),   // ek valid email hona chaiye
     body('password', 'password must be at least 5 chars long').isLength({ min: 5 }),
 ], async (req, res) => {
+
+    let success = false;
     // if there are errors, return the bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {   // agar errors empty nahi hai i.e false to !false i.e true karke if condition chalado
-        return res.status(400).json({ errors: errors.array() });  // array of errors will be returned with msg,value,param and location
+        return res.status(400).json({ success, errors: errors.array() });  // array of errors will be returned with msg,value,param and location
     }
 
 
@@ -72,7 +74,7 @@ router.post('/createuser', [
         //  Instead of using createIndexes() to make unique email....we will write logic here to ensure email to be unique 
         let user = await User.findOne({ email: req.body.email });  // User model par humne findOne() method lagaya hai user ko email dega body mein se
         if (user) {    // if user with the email exists, to bas game over return kardo error ki aisa email db mein hai already
-            return res.status(400).json({ error: "Sorry a user with this email already exists" });
+            return res.status(400).json({ success, error: "Sorry a user with this email already exists" });
         }
 
         // HASHING THE PASSWORD USING Salt and bcrypt
@@ -95,7 +97,8 @@ router.post('/createuser', [
         const authToken = jwt.sign(data, JWT_SECRET);   // sign() is synchronus method
         console.log(authToken);
         // res.json(authToken);    //intead of sending user in response we will send jsw token
-        res.json({ authToken });  // es6, now we don't need to write like authToken: authToken, automatically ho jayega
+        success = true;
+        res.json({ success, authToken });  // es6, now we don't need to write like authToken: authToken, automatically ho jayega
     }
     catch (error) {
         console.error(error.message);
