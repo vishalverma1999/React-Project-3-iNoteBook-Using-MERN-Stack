@@ -110,7 +110,8 @@ router.post('/login', [
     body('email', 'Enter a valid email').isEmail(),   
     body('password', 'password cannot be blank').isLength({ min: 5 })
 ], async (req, res) => {
-
+    
+    let success = false;
     // if there are errors, return the bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {   // agar errors empty nahi hai i.e false to !false i.e true karke if condition chalado
@@ -128,7 +129,8 @@ router.post('/login', [
         // Ab agar email mil jaata hai to password ko compare karo database mein stored hash se
         const passwordCompare = await bcrypt.compare(password, user.password);  // compare() is a asynchronous method, returns boolean
         if(!passwordCompare){
-            return res.status(400).json({ errors: "Please try to login with correct credentials" });
+            success = false;
+            return res.status(400).json({ success, errors: "Please try to login with correct credentials" });
         }
 
 
@@ -139,7 +141,8 @@ router.post('/login', [
             }
         }
         const authToken = jwt.sign(data, JWT_SECRET);   // sign() is synchronus method
-        res.json({ authToken }); 
+         success = true;
+        res.json({ success, authToken });   // success isliye daal taaki jab response aaye to true aur false bataye, if sahi hai to true else false aur fir uski help se frontend mein logic develop ho sake like if(json.success) do this or do that
 
     } catch (error) {
         console.error(error.message);
