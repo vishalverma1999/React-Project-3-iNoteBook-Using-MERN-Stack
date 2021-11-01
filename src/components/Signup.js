@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
-const Signup = () => {
+const Signup = (props) => {
     
     const [credentials, setcredentials] = useState({name: "", email: "", password: "", cpassword: ""});
     let history = useHistory();   // Redirect karne ke liye hum useHistory hook ka use karenge jo ki react-router-dom ka hi part hai
@@ -26,9 +26,10 @@ const Signup = () => {
             localStorage.setItem('token', json.authToken);   // saving the authtoken in localstorage
             // Redirect karne ke liye hum useHistory hook ka use karenge jo ki react-router-dom ka hi part hai
             history.push('/');
+            props.showAlert("Account Created Successfully", "success");
         }
         else {
-            alert("Invalid Credentials");
+            props.showAlert("Invalid Credentials", "danger");
         }
     }
 

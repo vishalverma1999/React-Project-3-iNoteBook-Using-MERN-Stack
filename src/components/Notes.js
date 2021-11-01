@@ -3,7 +3,7 @@ import NoteItem from './NoteItem';
 import AddNote from './AddNote'
 import noteContext from '../context/notes/noteContext'
 
-const Notes = () => {
+const Notes = (props) => {
 
     const [note, setnote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
     const context = useContext(noteContext);   /// context API ka use
@@ -27,7 +27,7 @@ const Notes = () => {
         editNote(note.id, note.etitle, note.edescription, note.etag);
         ref.current.click();   //click karne par update waali button, close waali button ki functionality ko adopt karlegi aur modal band ho jayega
         // Remember update button par click karne ke baad ref waala kaam sabse aakhir mein hi karna
-
+        props.showAlert("Note Updated Successfully","success")
     }
 
     const onChange = (e) => {
@@ -38,7 +38,7 @@ const Notes = () => {
 
     return (
         <>
-            <AddNote />
+            <AddNote showAlert={props.showAlert} />
 
             {/* <!-- Button trigger modal --> */}
             <button type="button" className="btn btn-primary d-none" ref={ref} data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -81,7 +81,7 @@ const Notes = () => {
             <div className="row my-3">
                 <h2>Your Notes</h2>
                 {notes.map((noteElement) => {   // looping through the notes state containing notesInitial Array
-                    return <NoteItem key={noteElement._id} updateNote={updateNote} notes={noteElement} />
+                    return <NoteItem key={noteElement._id} updateNote={updateNote} notes={noteElement} showAlert={props.showAlert} />
                 })}
             </div>
         </>
